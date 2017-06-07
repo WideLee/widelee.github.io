@@ -1,22 +1,22 @@
 # Site settings
-title: Your Blog
-SEOTitle: 你的博客 | Your Blog
+title: SmartYi
+SEOTitle: 你的博客 | SmartYi Blog
 header-img: img/home-bg.jpg
-email: huxpro@gmail.com
+email: limkuan24@gmail.com
 description: ""
 keyword: ""
-url: "http://huangxuan.me"              # your host, for absolute URL
-baseurl: "/huxblog-boilerplate"         # for example, '/blog' if your blog hosted on 'host/blog'
+url: "http://smartyi.tk"              # your host, for absolute URL
+baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 
 # SNS settings
 RSS: false
-weibo_username:     huxpro
-zhihu_username:     huxpro
-github_username:    huxpro
+weibo_username:     widelee
+zhihu_username:     li-ming-kuan
+github_username:    widelee
 #twitter_username:  huxpro
-facebook_username:  huxpro
+#facebook_username:  huxpro
 
 
 
@@ -25,7 +25,7 @@ facebook_username:  huxpro
 highlighter: rouge
 permalink: pretty
 paginate: 10
-exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+exclude: ["less","node_modules","Gruntfile.js", "package.json", "README.md", "README.zh.md"]
 anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
 
 
@@ -49,10 +49,13 @@ kramdown:
 # Disqus settings
 #disqus_username: _your_disqus_short_name_
 
+# Netease setttings
+netease_comment: true
+
 # Duoshuo settings
 duoshuo_username: huxblog
 # Share component is depend on Comment so we can NOT use share only.
-duoshuo_share: true                     # set to false if you want to use Comment without Sharing
+duoshuo_share: false                     # set to false if you want to use Comment without Sharing
 
 
 
