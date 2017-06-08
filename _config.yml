@@ -65,7 +65,7 @@ netease_comment: true
 # ba_track_id: nothing <4cc1f2d8f3067386cc5cdb626a202900>
 # Google Analytics
 ga_track_id: 'UA-100591812-1'            # Format: UA-xxxxxx-xx
-ga_domain: smartyi.tk
+ga_domain: widelee.github.io
 
 
 

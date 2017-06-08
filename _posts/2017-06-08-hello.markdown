@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "Welcome to Hux Blog"
+title:      "Welcome to SmartYi Blog"
 subtitle:   " \"Hello World, Hello Blog\""
-date:       2015-01-29 12:00:00
-author:     "Hux"
-header-img: "img/post-bg-2015.jpg"
+date:       2017-06-08 00:00:00
+author:     "SmartYi"
+header-img: "img/in-post/hello/hello.jpg"
 tags:
     - 生活
 ---
