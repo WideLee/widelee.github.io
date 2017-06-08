@@ -6,7 +6,7 @@ date:       2017-06-08
 author:     "SmartYi"
 header-img: "img/in-post/tcp-ip-1/head.jpg"
 tags:
-    - tcp/ip
+    - TCP/IP
     - 计算机网络
 ---
 
