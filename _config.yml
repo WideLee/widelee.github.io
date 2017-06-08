@@ -1,10 +1,10 @@
 # Site settings
 title: SmartYi
-SEOTitle: 你的博客 | SmartYi Blog
+SEOTitle: MK的博客 | SmartYi Blog
 header-img: img/home-bg.jpg
 email: limkuan24@gmail.com
-description: ""
-keyword: ""
+description: "Try everything"
+keyword: "Android"
 url: "http://smartyi.tk"              # your host, for absolute URL
 baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 
@@ -72,7 +72,7 @@ ga_domain: smartyi.tk
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "写写代码，做做设计，看看产品。世界那么大，多玩玩看看。"
-sidebar-avatar: /img/avatar-hux.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/avatar-limk.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
@@ -84,20 +84,20 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 
 # Friends
 friends: [
-    {
-        title: "Hux Blog",
-        href: "http://huangxuan.me"
-    },{
-        title: "Foo",
-        href: "#"
-    },{
-        title: "Bar",
-        href: "#"
-    },{
-        title: "Example Friends",
-        href: "#"
-    },{
-        title: "It helps SEO",
-        href: "#"
-    }
+    # {
+    #     title: "Hux Blog",
+    #     href: "http://huangxuan.me"
+    # },{
+    #     title: "Foo",
+    #     href: "#"
+    # },{
+    #     title: "Bar",
+    #     href: "#"
+    # },{
+    #     title: "Example Friends",
+    #     href: "#"
+    # },{
+    #     title: "It helps SEO",
+    #     href: "#"
+    # }
 ]
