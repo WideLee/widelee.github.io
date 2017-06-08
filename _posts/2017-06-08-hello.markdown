@@ -2,7 +2,7 @@
 layout:     post
 title:      "Welcome to SmartYi Blog"
 subtitle:   " \"Hello World, Hello Blog\""
-date:       2017-06-08 00:00:00
+date:       2017-06-08
 author:     "SmartYi"
 header-img: "img/in-post/hello/hello.jpg"
 tags:
