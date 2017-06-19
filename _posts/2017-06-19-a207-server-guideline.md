@@ -62,7 +62,7 @@ ssh -p <port> root@222.200.185.76
 
 - VNC Viewer是跨平台的，Windows/Linux/Mac/iOS/Android/Chrome都有对应的客户端
 
-- 前往VNC Viewer官网https://www.realvnc.com/download/viewer/下载对应平台的客户端
+- 前往[VNC Viewer官网](https://www.realvnc.com/download/viewer/)下载对应平台的客户端
 
 - （以Chrome应用为例）在Address里输入Amax服务器的IP地址以及分配到的第二个端口号
 
@@ -290,7 +290,7 @@ ssh -p <port> root@222.200.185.76
   #如果runtest结果为pass那么编译成功
   ```
 
-  - 编译Matlab wrapper
+- 编译Matlab wrapper（前提是正确安装了Matlab）
 
   ```shell
   make matcaffe
