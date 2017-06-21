@@ -98,10 +98,10 @@ def calculate_grad(X, W, Y):
 - 后来改用了multiprocessing的并行库进行测试，在分析代码的时候发现`numpy.matmul`函数的运行时间很奇怪，单进程的时候执行100000x1000规模的矩阵乘法耗时0.2s左右，而并行使用两个进程同时执行50000x1000规模的矩阵乘法的时候，两个进程该函数执行的时间都为0.8s左右，**暂时还没找到`matmul`函数多进程的时候速度反而变慢的原因**。
 
 ### 6. 参考博客
-- (道可叨 \| python 线程，GIL 和 ctypes)[http://zhuoqiang.me/python-thread-gil-and-ctypes.html]
-- (详解并行逻辑回归)[http://www.csdn.net/article/2014-02-13/2818400-2014-02-13]
-- (python 多线程编程)[http://blog.csdn.net/guopengzhang/article/details/5458091]
-- (Python线程同步机制: Locks, RLocks, Semaphores, Conditions, Events和Queues - Zhou's Blog)[http://yoyzhou.github.io/blog/2013/02/28/python-threads-synchronization-locks/]
-- (理解Python并发编程一篇就够了 - 进程篇)[http://www.dongwm.com/archives/%E4%BD%BF%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%AF%87/]
-- (Andrew Ng logistic-regression keynote)[/img/in-post/logistic-regression/Lecture6.pptx]
-- (Andrew Ng logistic-regression Lecture Note)[/img/in-post/logistic-regression/loss-functions.pdf]
+- [道可叨 \| python 线程，GIL 和 ctypes](http://zhuoqiang.me/python-thread-gil-and-ctypes.html)
+- [详解并行逻辑回归](http://www.csdn.net/article/2014-02-13/2818400-2014-02-13)
+- [python 多线程编程](http://blog.csdn.net/guopengzhang/article/details/5458091)
+- [Python线程同步机制: Locks, RLocks, Semaphores, Conditions, Events和Queues - Zhou's Blog](http://yoyzhou.github.io/blog/2013/02/28/python-threads-synchronization-locks/)
+- [理解Python并发编程一篇就够了 - 进程篇](http://www.dongwm.com/archives/%E4%BD%BF%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%AF%87/)
+- [Andrew Ng logistic-regression keynote](/img/in-post/logistic-regression/Lecture6.pptx)
+- [Andrew Ng logistic-regression Lecture Note](/img/in-post/logistic-regression/loss-functions.pdf)
