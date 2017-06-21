@@ -13,14 +13,14 @@ tags:
 
 > Created  By MingkuanLi At 2017-04-13
 
-### 服务器信息
+### 1. 服务器信息
 
 |               服务器IP地址                |              CPU               |    GPU     |  内存   |         磁盘         |
 | :----------------------------------: | :----------------------------: | :--------: | :---: | :----------------: |
 | `192.168.0.21` | Intel Xeon E5-2620 v3 / 2.4GHz | Tesla K40c | 128GB | 512GB SSD / 4T HDD |
 | `192.168.0.70` | Intel Core i7-6700 / 3.40GHz | GeForce GTX 1080 Ti | 48GB | 512GB SSD / 4T HDD |
 
-### 概览
+### 2. 概览
 
 - 服务器主要使用LXC容器进行用户间的管理与隔离
 - LXC可以简单理解成一个虚拟机，但没有实际进行虚拟化，而是在Linux内核对每个用户进行了隔离
@@ -30,7 +30,7 @@ tags:
 - 分配在`192.168.0.21`的发行版是Ubuntu 14.04 LTS 64bit，桌面系统使用XFCE4，NVIDIA显卡驱动版本为375.26
 - 分配在`192.168.0.70`的发行版是Ubuntu 14.04 LTS 64bit，桌面系统使用Gnome，NVIDIA显卡驱动版本为381.22
 
-### 创建新用户
+### 3. 创建新用户
 
 1. 创建虚拟机前联系一下`ken4000kl@gmail.com`或`mingkuan.li@foxmail.com`
 
@@ -46,9 +46,9 @@ tags:
 
 6. **注意：**每个用户分配了10个端口，具体的端口映射功能还暂未实现，其中第一个端口例如limkuan虚拟机下对应的9280端口为SSH端口，第二个端口9281端口为VNC远程桌面的端口，第三个端口9282映射到8080，可用于一些其他应用。
 
-### 管理虚拟机
+### 4. 管理虚拟机
 
-##### 1. SSH远程连接
+##### 4.1 SSH远程连接
 
 ```sh
 ssh -p <port> root@222.200.185.76
@@ -56,7 +56,7 @@ ssh -p <port> root@222.200.185.76
 
 把\<port\>换成对应的第一个端口号，然后输入注册时的密码后就可以登录到当前用户的虚拟机的终端内，注意登录进去是超级管理员root账号
 
-##### 2. VNC远程连接
+##### 4.2 VNC远程连接
 
 - 使用VNC进行远程连接，需要下载VNC Viewer
 
@@ -70,15 +70,15 @@ ssh -p <port> root@222.200.185.76
 
 - 接下来输入在注册过程中填入的密码，即可登录进入桌面系统
 
-##### 3. SFTP文件传输
+##### 4.3 SFTP文件传输
 
 - 使用任何一个支持SFTP协议的软件（例如Filezilla、winscp等）
 
 - （以Filezilla为例）在主机框里输入sftp://\<ip\>，用户名输入root，密码为注册时填的密码，端口号为分配的第一个端口号，点快速连接后即可看到虚拟机内的文件列表，即可进行上传下载等文件管理
 
-### 更多配置（Optional）
+### 5. 更多配置（Optional）
 
-##### 1. 修复Xfce桌面部分问题
+##### 5.1 修复Xfce桌面部分问题
 
 - **TAB按键失灵：**这个问题可能是由于Xfce的按键冲突引起的，需要到应用程序菜单→设置→窗口管理器→键盘→切换同一应用程序窗口，然后点击清除按钮清除Super+制表的快捷键绑定即可
 
@@ -93,7 +93,7 @@ ssh -p <port> root@222.200.185.76
   xdg-user-dirs-gtk-update
   ```
 
-##### 2. 更改VNC远程桌面分辨
+##### 5.2 更改VNC远程桌面分辨
 
 - SSH登录进LXC内，后续命令如果是root账户那么不需要输入`sudo`
 
@@ -109,12 +109,12 @@ ssh -p <port> root@222.200.185.76
 
   ![5](/img/in-post/server-guideline/5.png)
 
-##### 3. 更换软件源
+##### 5.3 更换软件源
 
 - 官方的软件源比较慢，可以使用例如中科大或清华大学在教育网内的软件源，可以在后续安装软件过程中获得比较好的下载速度
 - 具体配置方法参考[Ubuntu官方文档](http://wiki.ubuntu.org.cn/模板:14.04source)
 
-##### 4. 安装其他软件
+##### 5.4 安装其他软件
 
 - 常用软件安装包位于LXC容器的`/mnt/UserData/Public`，包括如下：
   - `Sublime Text-build3126`
@@ -130,7 +130,7 @@ ssh -p <port> root@222.200.185.76
   - `OpenBLAS`
 - 有同学下载了其他软件或新版本的软件也欢迎更新进去
 
-##### 5. 安装CUDA
+##### 5.5 安装CUDA
 
 > 以下的教程为总结我成功Caffe框架以及cuda的历史记录总结得出，可能有遗漏的地方，如果发现什么问题请联系`mingkuan.li@foxmail.com`补充修改
 
@@ -182,7 +182,7 @@ ssh -p <port> root@222.200.185.76
 
     ![7](/img/in-post/server-guideline/7.png)
 
-##### 6. 配置Caffe框架
+##### 5.6 配置Caffe框架
 
 - 复制安装文件到虚拟机内，需要到的文件有：
 
@@ -194,7 +194,7 @@ ssh -p <port> root@222.200.185.76
 - 安装依赖库
 
   ```shell
-  sudo apt-get install libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python-dev python-numpy libtbb-dev libjpeg-dev libpng12-dev libtiff4-dev libjasper-dev libdc1394-22-dev libgphoto2-dev libavresample-dev python-pip openjdk-7-doc openjdk-7-jdk openjdk-7-jre openjdk-7-source cmake 
+  sudo apt-get install libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python-dev python-numpy libtbb-dev libjpeg-dev libpng12-dev libtiff4-dev libjasper-dev libdc1394-22-dev libgphoto2-dev libavresample-dev python-pip openjdk-7-doc openjdk-7-jdk openjdk-7-jre openjdk-7-source cmake
   sudo apt-get install libprotobuf-dev libleveldb-dev libsnapper-dev libopencv-dev libboost-all-dev libhdf5-serial-dev libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler libsnappy-dev lib32z1 lib32ncurses5 lib32bz2-1.0 lib32stdc++6 gfortran
   ```
 
@@ -212,7 +212,7 @@ ssh -p <port> root@222.200.185.76
 
   ```shell
   # 解压opencv-3.0.0.zip以及opencv_contrib-3.0.0.zip
-  unzip opencv-3.0.0.zip 
+  unzip opencv-3.0.0.zip
   unzip opencv_contrib-3.0.0.zip
 
   cp -r opencv_contrib-3.0.0 opencv-3.0.0/contrib
@@ -295,10 +295,9 @@ ssh -p <port> root@222.200.185.76
   make mattest
   ```
 
-### 已知问题
+### 6. 已知问题
 
 对于下面的问题，如果有相应的解决方法，请联系`mingkuan.li@foxmail.com`
 
 1. 不能弹出认证框输入密码
 2. Sublime Text 3无法输入中文
-
