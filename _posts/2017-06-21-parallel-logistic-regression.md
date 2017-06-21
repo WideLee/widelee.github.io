@@ -26,6 +26,7 @@ tags:
 ![Sigmoid图像](/img/in-post/logistic-regression/1.png)
 
 假设 $W$ 是 $N$ 维的特征权重向量，那么第 $j$ 个样本为正样本的概率是：
+
 $$
 P\left(y_j = 1|W, X_j\right) = \frac{1}{1 + e^{-W^T X_j}}
 $$
@@ -38,17 +39,20 @@ W.shape = (N, 1)
 ```
 
 求解逻辑回归的问题实际上是要找到一个合适的 $W$, 使得在正样本里 $P\left(y_j = 1|W, X_j\right)$ 尽可能大，在负样本里尽可能小，因此巧妙地把 $y_i$ 作为指数的一个符号位，联合起来得到如下目标：
+
 $$
 \max\limits_W{p(W)} = \prod\limits_{j=1}^M{\frac{1}{1 + e^{-y_iW^T X_j}}}
 $$
 
 为了方便计算，对上式求 $log$ 并取负号，得到目标函数：
+
 $$
 \min\limits_{W}{f(W)} = \sum\limits_{j=1}^{M}{\log\left(1 + e^{-y_iW^T X_j}\right)}
 $$
 
 ### 3. 使用梯度下降迭代
 使用梯度下降的算法求解这个最小化Cost函数的问题，最重要的是求解梯度，假设在第 $t$次迭代的梯度：
+
 $$
 \begin{array}{rl}
 G_t = \triangledown_W f(W) &=  \sum\limits_{j=1}^{M}{\frac{1}{1 + e^{-y_iW^T X_j} } \cdot e^{-y_iW^T X_j} \cdot \left(-y_jX_j\right)} \\
@@ -57,9 +61,11 @@ G_t = \triangledown_W f(W) &=  \sum\limits_{j=1}^{M}{\frac{1}{1 + e^{-y_iW^T X_j
 $$
 
 使用矩阵的形式可以表示为：
+
 $$
 G_t = X^T \left[\left(\frac{1}{1 + e^{-y * (X W)}}- 1\right) * y\right]
 $$
+
 其中，$A * B$ 表示矩阵对应项相乘，$A$和$B$的维度应该相同，而且计算结果的维度也应该一样，代码如下：
 ```python
 import numpy as np
