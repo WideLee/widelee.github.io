@@ -61,7 +61,7 @@ sudo ./NVIDIA-Linux-x86_64-352.99.run
 
 - 重启后可以进入图形界面使用nvidia-smi验证NVIDIA驱动是否安装成功
 
-![验证NVIDIA驱动](img/in-post/lxc-gpu-server/1.png)
+![验证NVIDIA驱动](/img/in-post/lxc-gpu-server/1.png)
 
 - 接下来安装CUDA，在官网下载相应版本CUDA，建议选择run文件
 - 安装build-essential
@@ -73,7 +73,7 @@ sudo apt-get install build-essential
 - 执行`./cuda-xxxx.run`，根据提示，选择不安装NVIDIA驱动，然后其他默认就好
 - 装完后进入`samples`目录使用`make`编译，编译结果在`bin`文件夹里，执行`deviceQuery`验证CUDA是否安装成功
 
-###3. 安装配置LXC
+### 3. 安装配置LXC
 
 - 参考LXC官网的[Getting Started](https://linuxcontainers.org/lxc/getting-started/)
 - 使用`apt-get`安装`lxc`
@@ -86,65 +86,65 @@ sudo apt-get install lxc
 
   - 曾经打算全部使用sudo启动管理，但后来映射GPU设备到Container内的时候，出现如下的错误
 
-  ```
-  Failed to initialize NVML: Unknown Error
-  ```
+```
+Failed to initialize NVML: Unknown Error
+```
 
   - Google后[发现这个](https://superuser.com/questions/1017194/no-cuda-capable-device-is-detected-inside-lxc-container)，怀疑是映射到Container内的`/dev/nvidia0`等设备文件权限的问题，**暂时未能解决**
   - 后来搜到了这个[github issue](https://github.com/lxc/lxc/issues/1489)，问题和我们的基本类似，在`lxc-start`的时候会报如下错误：
 
-  ```
-  % lxc-start -n app --logfile /tmp/lxc.log --logpriority DEBUG
-  lxc-start: cgmanager.c: lxc_cgmanager_create: 301 call to cgmanager_create_sync failed: invalid request
-  lxc-start: cgmanager.c: lxc_cgmanager_create: 303 Failed to create pids:lxc/app
-  lxc-start: cgmanager.c: cgm_create: 650 Error creating cgroup pids:lxc/app
-  lxc-start: start.c: lxc_spawn: 910 failed creating cgroups
-  lxc-start: start.c: __lxc_start: 1149 failed to spawn 'app'
-  lxc-start: lxc_start.c: main: 341 The container failed to start.
-  lxc-start: lxc_start.c: main: 345 Additional information can be obtained by setting the --logfile and --logpriority options.
-  ```
+```
+% lxc-start -n app --logfile /tmp/lxc.log --logpriority DEBUG
+lxc-start: cgmanager.c: lxc_cgmanager_create: 301 call to cgmanager_create_sync failed: invalid request
+lxc-start: cgmanager.c: lxc_cgmanager_create: 303 Failed to create pids:lxc/app
+lxc-start: cgmanager.c: cgm_create: 650 Error creating cgroup pids:lxc/app
+lxc-start: start.c: lxc_spawn: 910 failed creating cgroups
+lxc-start: start.c: __lxc_start: 1149 failed to spawn 'app'
+lxc-start: lxc_start.c: main: 341 The container failed to start.
+lxc-start: lxc_start.c: main: 345 Additional information can be obtained by setting the --logfile and --logpriority options.
+```
 
   - 参考LXC项目的owner [hallyn](https://github.com/hallyn) 的解答，定位出问题可能是LXC里面的cgroup管理认不到`pids`这个cgroup，而`pids`这个cgroup是Linux内核4.3之后添加进去的（[这里](http://man7.org/linux/man-pages/man7/cgroups.7.html)）
 
-  ```
-  pids (since Linux 4.3; CONFIG_CGROUP_PIDS)
-                This controller permits limiting the number of process that
-                may be created in a cgroup (and its descendants).
+```
+pids (since Linux 4.3; CONFIG_CGROUP_PIDS)
+              This controller permits limiting the number of process that
+              may be created in a cgroup (and its descendants).
 
-                Further information can be found in the kernel source file
-                Documentation/cgroup-v1/pids.txt.
-  ```
+              Further information can be found in the kernel source file
+              Documentation/cgroup-v1/pids.txt.
+```
 
   - 而Ubuntu 14.04.5的Linux内核是4.4，这就是为什么另外一台服务器是Ubuntu 14.04.4的系统然后安装上lxc后没出现奇怪的问题，而新装的这台服务器`lxc-start`启动不起来 
   - `pids`这个cgroup是管理`subsystem`的进程数量的，这个我们暂时不需要，于是考虑在Ubuntu启动的时候，把这个功能禁用掉
   - 打开`/boot/grub/grub.cfg`，找到对应的启动参数添加`cgroup_disable=pids`，添加如下：
 
-  ```sh
-  menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-89259414-c487-4d5e-a614-1cdc6b76113a' {
-  	recordfail
-  	load_video
-  	gfxmode $linux_gfx_mode
-  	insmod gzio
-  	insmod part_msdos
-  	insmod xfs
-  	set root='hd0,msdos1'
-  	if [ x$feature_platform_search_hint = xy ]; then
-  	  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  89259414-c487-4d5e-a614-1cdc6b76113a
-  	else
-  	  search --no-floppy --fs-uuid --set=root 89259414-c487-4d5e-a614-1cdc6b76113a
-  	fi
-  	linux	/boot/vmlinuz-4.4.0-96-generic.efi.signed root=UUID=89259414-c487-4d5e-a614-1cdc6b76113a ro  quiet splash $vt_handoff cgroup_disable=pids
-  	initrd	/boot/initrd.img-4.4.0-96-generic
-  }
-  ```
+```sh
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-89259414-c487-4d5e-a614-1cdc6b76113a' {
+  recordfail
+  load_video
+  gfxmode $linux_gfx_mode
+  insmod gzio
+  insmod part_msdos
+  insmod xfs
+  set root='hd0,msdos1'
+  if [ x$feature_platform_search_hint = xy ]; then
+    search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  89259414-c487-4d5e-a614-1cdc6b76113a
+  else
+    search --no-floppy --fs-uuid --set=root 89259414-c487-4d5e-a614-1cdc6b76113a
+  fi
+  linux /boot/vmlinuz-4.4.0-96-generic.efi.signed root=UUID=89259414-c487-4d5e-a614-1cdc6b76113a ro  quiet splash $vt_handoff cgroup_disable=pids
+  initrd  /boot/initrd.img-4.4.0-96-generic
+}
+```
 
   - 重启系统后，还需要给`.local`以及`.local/share`执行的权限，理论上lxc就能正常启动了
 
-  ```sh
-  chmod +x ~/.local
-  chmod +x ~/.local/share
-  lxc-start -n template -d
-  ```
+```sh
+chmod +x ~/.local
+chmod +x ~/.local/share
+lxc-start -n template -d
+```
 
 ### 4. 配置LXC内的各种服务
 
@@ -283,8 +283,8 @@ sudo iptables -t nat --list
   - 这个问题大概是因为添加`PREROUTING`的时候，指定了所有设备里进入的访问80端口数据包都进行转发，而从其他虚拟机里出来的数据包时流经虚拟设备lxcbr0的，也匹配了上面那个规则，导致被转发了
   - 解决的方法是在添加转发规则的时候通过参数`-i`指定端口，只有外网的端口才进行转发
 
-  ```sh
-  sudo iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 10000 -j DNAT --to-destination 10.0.3.205:5901
-  ```
+```sh
+sudo iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 10000 -j DNAT --to-destination 10.0.3.205:5901
+```
 
   ​
