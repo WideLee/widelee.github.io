@@ -173,6 +173,17 @@ sudo ./NVIDIA-Linux-x86_64-352.99.run --no-kernel-module
 
 - 和宿主机一样安装cuda
 - `sudo apt-get install ubuntu-desktop gnome-panel`
+- 安装中文语言包
+
+```sh
+sudo apt-get install language-pack-zh-hans
+sudo apt-get install language-pack-gnome-zh-hans
+# 运行语言支持设置
+sudo apt install $(check-language-support)
+```
+
+
+
 - 安装vnc4server
 - 配置`.vnc/xstartup`
 
@@ -195,8 +206,10 @@ export XKL_XMODMAP_DISABLE=1
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
+LANG=zh_CN.UTF-8
 ibus-daemon -d -x
 
+# 重要！启用中文输入法的时候需要用到
 export GTK_IM_MODULE=ibus
 export QT_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
@@ -206,7 +219,6 @@ gnome-settings-daemon &
 metacity &
 nautilus -n &
 gnome-terminal &
-
 ```
 
 - 配置vnc的自启动脚本`/etc/init.d/vncserver`
