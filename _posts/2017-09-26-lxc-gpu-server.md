@@ -151,6 +151,7 @@ lxc-start -n template -d
 - 这里是打算把实验室的主页以及各种服务（例如Git，SVN，FTP等）都放在虚拟机里，方便备份迁移，尽量做到宿主机崩了之后重装系统可以快速恢复里面的服务
 - 在这个过程中遇到的主要问题是让服务在后台自启动，大概有如下几个方式
   - 配置`/etc/init/xxxx.conf`（未测试，但`vsftpd`好像是通过这种方式自启动的）
+  - 添加到`/etc/init.d`目录里，然后进入自启动`update-rc.d vncserver defaults`
   - 修改`/etc/rc.local`，然后`lxc-start`的时候指定命令`cmd`
   - 启动后，另外通过`lxc-attach`启动相关的服务，通过`nohup`实现后台运行
 
@@ -171,7 +172,7 @@ sudo ./NVIDIA-Linux-x86_64-352.99.run --no-kernel-module
 ```
 
 - 和宿主机一样安装cuda
-- `sudo apt-get install ubuntu-desktop`
+- `sudo apt-get install ubuntu-desktop gnome-panel`
 - 安装vnc4server
 - 配置`.vnc/xstartup`
 
