@@ -679,7 +679,28 @@ target_link_libraries(native-lib android log
 
 ### 4. 其他
 
-- TODO 每一步按commit
-- 添加vlfeat支持
-- 参考项目Demo https://github.com/WideLee/AndroidOpenCVDemo
+- **添加VLFeat支持**：有时候可能需要使用`VLFeat`中的`kdtree`/`kmeans`等实现
+  - 下载VLFeat源码，[这个](/img/in-post/opencv-android/vlfeat_src.zip)我精简过一些并且添加了`vlfeat.cmake`文件
+  - 解压后放入`app/src/main/cpp/vlfeat`目录内
+  - 修改**CMakeList.txt**文件，添加如下代码后，重新编译即可`#include "vlfeat/xxxx"`使用`VLFeat`的相关模块
+
+```cmake
+# import cmake file of vlfeat
+include(src/main/cpp/vlfeat/vlfeat.cmake)
+
+add_library( # Sets the name of the library.
+             native-lib
+
+             # Sets the library as a shared library.
+             SHARED
+
+             # Provides a relative path to your source file(s).
+             # Associated headers in the same location as their source
+             # file are automatically included.
+             src/main/cpp/native-lib.cpp
+             # import sourcecode of vlfeat
+             ${VLFEAT_SRC})
+```
+
+- 参考项目Demo：https://github.com/WideLee/AndroidOpenCVDemo
 
