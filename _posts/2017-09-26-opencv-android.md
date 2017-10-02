@@ -2,7 +2,7 @@
 layout:     post
 title:      "Android中编译以及使用OpenCV"
 subtitle:   ""
-date:       2017-06-21
+date:       2017-10-02
 author:     "SmartYi"
 header-img: "img/in-post/opencv-android/head.jpeg"
 tags:
@@ -48,11 +48,11 @@ OpenCV-2.4.13-android-sdk
 
 - 新建一个Android工程，勾选`C++ support`，如下图所示：
 
-![创建工程](/img/in-post/opencv-andriod/1.png)
+![创建工程](/img/in-post/opencv-android/1.png)
 
 - 在项目那里右键打开`Module Setting`，导入`sdk`目录中的`java`文件夹，即OpenCV的Java API，如果项目中只需要在C++中使用OpenCV，那么不需要导入这一步
 
-![导入OpenCV的Java API](/img/in-post/opencv-andriod/2.png)
+![导入OpenCV的Java API](/img/in-post/opencv-android/2.png)
 
 - 把OpenCV中native中jni的`include`目录以及libs目录复制到工程项目内，这里放到了`app/libs/opencv/include`以及`app/libs/opencv/libs`
 - 修改`build.gradle``
@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
 
 - 测试是否能正确编译运行（读写存储卡中的图片记得动态申请读写外部存储的权限），下图所示能正确读出给定图片的大小
 
-![运行结果-1](/img/in-post/opencv-andriod/3.png)
+![运行结果-1](/img/in-post/opencv-android/3.png)
 
 ---
 
@@ -382,7 +382,7 @@ Java_indoor_sysu_mobile_limk_opencvtest_MainActivity_stringFromJNI(
 
 - 运行结果如下所示，第二行能够正确显示提取到的surf特征点个数
 
-![运行结果-2](/img/in-post/opencv-andriod/4.png)
+![运行结果-2](/img/in-post/opencv-android/4.png)
 
 ### 3. 编译OpenCV for Android
 
