@@ -14,8 +14,6 @@ tags:
 
 * 目录
 {:toc}
-
-
 ### 1. 概述
 
 学习TensorFlow顺便翻译一下官方的TensorFlow Programmer's Guide，也帮助自己理解使用TensorFlow完成深度学习任务的具体流程以及每一部分需要到的技术，有什么翻译或者理解错的地方欢迎评论指出。
@@ -146,6 +144,88 @@ est_inception_v3.train(input_fn=my_training_set, steps=2000)
 ```
 
 ### 3. Tensor
+
+正如名称所示，TensorFlow是定义和运行设计Tensor的计算框架，Tensor是向量与矩阵想可能更高维度的推广。实际上，TensorFlow将Tensor表示为基本数据类型的n维数组。
+
+当编写一个TensorFlow程序时，我们操作和传递的主要对象是`tf.Tensor`，一个`tf.Tensor`对象表示一个定义好的计算，在运行阶段会产生一个值。TensorFlow程序首先建立`tf.Tensor`对象的计算图，详细说明如何根据其他Tensor计算每个Tensor的值，然后通过运行这个图形的一部分来实现计算得到最终的结果。
+
+一个`tf.Tensor`有如下两个特性
+
+- 数据类型（例如float32, int32, string）
+- 形状（Shape）
+
+有一些Tensor是特殊的，这些会在其他部分介绍，主要有：
+
+- `tf.Variable`
+- `tf.Constant`
+- `tf.Placeholder`
+- `tf.SparseTensor`
+
+除了`tf.Variable`之外，Tensor的值都是不变的，这意味着单个Tensor在执行后中它的值是固定的。但是，两次评估相同的Tensor可以返回不同的值，例如Tensor可以是从磁盘中读取数据或生成随机数的结果。
+
+#### 3.1 秩（Rank）
+
+一个`tf.Tensor`的秩为它的维数，请注意，TensorFlow里的rank与矩阵的rank的含义并不相同。如下表所示，TensorFlow中的各个不同的rank对应于不同的数学含义
+
+| Rank | 数学含义                      |
+| ---- | ------------------------- |
+| 0    | 标量（只有大小）                  |
+| 1    | 向量（有大小和方向）                |
+| 2    | 矩阵                        |
+| 3    | 3-Tensor（cube of numbers） |
+| n    | n-Tensor                  |
+
+##### Rank 0
+
+下面的片段创建了一些rank为0的Tensor：
+
+```python
+mammal = tf.Variable("Elephant", tf.string)
+ignition = tf.Variable(451, tf.int16)
+floating = tf.Variable(3.14159265359, tf.float64)
+its_complicated = tf.Variable((12.3, -4.85), tf.complex64)
+```
+
+##### Rank 1
+
+创建Rank 1的Tensor，我们需要传一个list作为初始值，例如：
+
+```python
+mystr = tf.Variable(["Hello"], tf.string)
+cool_numbers  = tf.Variable([3.14159, 2.71828], tf.float32)
+first_primes = tf.Variable([2, 3, 5, 7, 11], tf.int32)
+its_very_complicated = tf.Variable([(12.3, -4.85), (7.5, -6.23)], tf.complex64)
+```
+
+##### 更高维的Tensor
+
+一个rank为2的Tensor由至少一行和至少一列组成：
+
+```python
+mymat = tf.Variable([[7],[11]], tf.int16)
+myxor = tf.Variable([[False, True],[True, False]], tf.bool)
+linear_squares = tf.Variable([[4], [9], [16], [25]], tf.int32)
+squarish_squares = tf.Variable([ [4, 9], [16, 25] ], tf.int32)
+rank_of_squares = tf.rank(squarish_squares)
+mymatC = tf.Variable([[7],[11]], tf.int32)
+```
+
+更高维的Tensor同样由一个n维数组构成，例如，在图像处理过程中，使用许多rank为4的Tensor，对应一个batch的样本，图像的宽度，高度以及色彩通道。
+
+```python
+my_image = tf.zeros([10, 299, 299, 3])  # batch x height x width x color
+```
+
+##### 获取一个 `tf.Tensor` 对象的rank
+
+通过`tf.rank`方法可以获取一个`tf.Tensor`对象的rank，例如，下面的代码片段获取上一节中定义的`tf.Tensor`的rank：
+
+```python
+r = tf.rank(my3d)
+# After the graph runs, r will hold the value 3.
+```
+
+
 
 ### 4. Variables
 
