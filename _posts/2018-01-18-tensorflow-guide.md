@@ -227,17 +227,7 @@ r = tf.rank(my3d)
 
 
 
-### 4. Variables
+> 官方中文翻译见：https://www.tensorflow.org/programmers_guide/tensors
 
-### 5. Graphs and Sessions
 
-### 6. Saving and Restoring
-
-### 7. Importing Data
-
-### 8. Embeddings
-
-### 9. Debugging TesnorFlow Programs
-
-### 10. TensorFlow Version Compatibility
 
