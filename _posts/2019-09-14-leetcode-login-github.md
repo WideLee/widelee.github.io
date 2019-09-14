@@ -22,6 +22,7 @@ tags:
 
 #### Golang实现模拟登录
 0. HttpClient使用CookieJar记录请求过程中的Cookie值
+
 ```
 jar, err := cookiejar.New(nil)
 if err != nil {
@@ -29,12 +30,16 @@ if err != nil {
 }
 httpClient.Jar = jar
 ```
+
 1. 请求LeetCode的登录页面`https://leetcode.com/accounts/github/login/?next=%2F`，会自动Redirect到github的登录页面，带着LeetCode的ClientId/RedirectURL等信息
+
 ```
 req, err := http.NewRequest(http.MethodGet, LeetCodeLoginUrl, nil)
 resp, err := client.DoRequest(req)
 ```
+
 2. 在页面中获取`authenticity_token`，带上Github的用户名密码请求Github的登录`https://github.com/session`
+
 ```
 req, err = http.NewRequest(http.MethodPost, GithubLoginSession,
     bytes.NewBuffer([]byte(MapToUrlParam(map[string]string{
@@ -54,7 +59,9 @@ for k, v := range headers {
 }
 resp, err = client.DoRequest(req)
 ```
+
 3. 如果是第一次登录，在Github上还没完成对LeetCode应用的授权，需要再次请求`https://github.com/login/oauth/authorize`完成授权
+
 ```
 // token/clientId/redirectUri/redirectUri/state/scope等值均可以解析返回的HTML页面中获取
 req, err = http.NewRequest(http.MethodPost, GithubOauthSession,
@@ -77,11 +84,14 @@ for k, v := range headers {
 
 resp, err = client.DoRequest(req)
 ```
+
 4. 如果已经完成授权，需要在页面中找到redirect url，带上Authorization code重定向回到LeetCode
+
 ```
 req, err = http.NewRequest(http.MethodGet, redirectUrl, nil)
 resp, err = client.DoRequest(req)
 ```
+
 5. 最后LeetCode使用Authorization code换取Authorization Token，获取到我们在Github的账户信息
 
 #### 参考博客
