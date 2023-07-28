@@ -8,9 +8,8 @@ keyword: "Android"
 url: "https://blog.smartyi.xyz"              # your host, for absolute URL
 baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 
-# Gems
-# from PR#40, to support local preview for Jekyll 3.0
-plugins: [jekyll-paginate]
+# Publish posts or collection documents with a future date.
+future: true
 
 # SNS settings
 RSS: false
@@ -27,9 +26,24 @@ github_username:    widelee
 highlighter: rouge
 permalink: pretty
 paginate: 10
-exclude: ["less","node_modules","Gruntfile.js", "package.json", "README.md", "README.zh.md"]
-anchorjs: false                          # if you want to customize anchor. check out line:181 of `post.html`
+exclude:
+  [
+    "less",
+    "node_modules",
+    "Gruntfile.js",
+    "package.json",
+    "README.md",
+    "README.zh.md",
+  ]
+anchorjs: true # if you want to customize anchor. check out line:181 of `post.html`
+# If you have timezone issue (e.g. #68) in China, uncomment to use this:
+#timezone: CN
 
+# Gems
+# from PR#40, to support local preview for Jekyll 3.0
+# make sure you have this gem installed
+# `$ gem install jekyll-paginate`
+plugins: [jekyll-paginate]
 
 # Markdown settings
 # replace redcarpet to kramdown,
@@ -37,21 +51,24 @@ anchorjs: false                          # if you want to customize anchor. chec
 # document: http://jekyllrb.com/docs/configuration/#kramdown
 markdown: kramdown
 kramdown:
-  input: GFM                            # use Github Flavored Markdown !important
-
-
+  input: GFM # use Github Flavored Markdown !important
+  syntax_highlighter_opts:
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
 
 # Disqus settings
 disqus_username: widelee
-
-# Netease setttings
-# netease_comment: false
 
 # Duoshuo settings
 # duoshuo_username: huxblog
 # Share component is depend on Comment so we can NOT use share only.
 # duoshuo_share: false                     # set to false if you want to use Comment without Sharing
 
+# Netease settings
+netease_comment: false
 
 # Analytics settings
 # Baidu Analytics
@@ -80,14 +97,4 @@ friends: [
          title: "HelloKenLee Blog",
          href: "https://hellokenlee.github.io/"
     }
-    # ,{
-    #     title: "Bar",
-    #     href: "#"
-    # },{
-    #     title: "Example Friends",
-    #     href: "#"
-    # },{
-    #     title: "It helps SEO",
-    #     href: "#"
-    # }
 ]

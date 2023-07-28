@@ -3,121 +3,23 @@ layout: page
 title: "About"
 description: "Hey, this is MK Li."
 header-img: "img/about-bg.jpg"
+header-mask: 0.3
+multilingual: true
 ---
 
-<!-- Bootstrap Core CSS -->
-<link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">
-
-<!-- Custom CSS -->
-<link rel="stylesheet" href="{{ "/css/hux-blog.min.css" | prepend: site.baseurl }}">
-
-<!-- Pygments Github CSS -->
-<link rel="stylesheet" href="{{ "/css/syntax.css" | prepend: site.baseurl }}">
-
-<!-- Custom Fonts -->
-<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css">
-
-<!-- Language Selector -->
-<select onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-    <option value="0" selected> 中文 Chinese </option>
-    <option value="1"> 英语 English </option>
-</select>
+{% include multilingual-sel.html %}
 
 <!-- Chinese Version -->
 <div class="zh post-container">
-    <blockquote>
-    爱技术 爱生活 好好做自己该做的事
-    </blockquote>
-    <h3>title 1</h3>
-    <p>something</p>
-    <h5>subtitle</h5>
-    <p>otherthing</p>
-    <h4>title 2</h4>
-    <ul><li>
-    a</li>
-    <li>
-    b</li>
-    <li>
-    c</li>
-    <li>
-    d</li>
-    </ul>
+    {% capture about_zh %}{% include about/zh.md %}{% endcapture %}
+    {{ about_zh | markdownify }}
 </div>
 
 <!-- English Version -->
 <div class="en post-container">
-    <blockquote>
-        Try Everything
-    </blockquote>
-    <h3>title 5</h3>
-    <p>something</p>
-    <h5>subtitle</h5>
-    <p>otherthing</p>
-    <h4>title 7</h4>
-    <ul><li>
-    a</li>
-    <li>
-    b</li>
-    <li>
-    c</li>
-    <li>
-    d</li>
-    </ul>
+    {% capture about_en %}{% include about/en.md %}{% endcapture %}
+    {{ about_en | markdownify }}
 </div>
-
-<!-- Handle Language Change -->
-<script type="text/javascript">
-    var $zh = document.querySelector(".zh");
-    var $en = document.querySelector(".en");
-    function onLanChange(index){
-        if(index == 0){
-            $zh.style.display = "block";
-            $en.style.display = "none";
-        }else{
-            $en.style.display = "block";
-            $zh.style.display = "none";
-        }
-    }
-    onLanChange(0);
-</script>
-
-
-
-{% if site.duoshuo_username %}
-<!-- 多说评论框 start -->
-<div class="comment">
-    <div class="ds-thread"
-    {% if site.duoshuo_username == "huxblog" %}
-        data-thread-id="1187623191091085319"
-    {% else %}
-        data-thread-key="{{site.duoshuo_username}}/about"
-    {% endif %}
-
-    data-title="{{page.title}}"
-    data-url="{{site.url}}/about/"></div>
-</div>
-<!-- 多说评论框 end -->
-
-<!-- Duoshuo hacking -->
-<input id="dsUser" type="hidden" value="{{site.duoshuo_username}}"  />
-
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User hacking by Hux
-    var _user = document.getElementById('dsUser').value;
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- 多说公共JS代码 end -->
-{% endif %}
 
 
 {% if site.disqus_username %}
